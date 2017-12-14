@@ -213,7 +213,7 @@ module board_raspberrypi_model_b_v2() {
         translate([x - mx - 3.6, -0.5, 0])         microusb_connector(mx, my, mz);
         translate([14, -18, -4.4])                 sd_card();     // Inserted
         //translate([14, -32, -4.4])               sd_card();     // Extracted
-        translate([x - mx - 3.6 + 0.375, -3, 0.3]) usb_male_micro_b_connector();
+        translate([x - mx, -3, 1.2])               rotate(a=180, v=[0, 0, 1]) usb_male_micro_b_connector();
         translate([49.35, 12.75])                  capacitor(6.5, 8);
         translate([18.8 + 0.625, 83, 10.4])        wifi_usb_edimax();
         translate([0, 0, -z]) {
@@ -255,7 +255,7 @@ module board_raspberrypi_model_a_plus_rev1_1() {
         translate([20.5, 0.8, -z])                  micro_sd_card();
         translate([x - 12.8, 50, 0])                audio_video(12.8);
         translate([18.6, y - 6, 1.4])               wifi_usb_edimax();
-        translate([x + 2.2, 7.2, 0.3])              rotate(a=90, v=[0, 0, 1]) usb_male_micro_b_connector();
+        translate([x + 2.2, 10.55, 1.2])            rotate(a=270, v=[0, 0, 1]) usb_male_micro_b_connector();
         translate([0, 0, -z]) {
             color("green") linear_extrude(height=z)
                 difference() {
@@ -284,7 +284,7 @@ module raspberrypi_model_a_plus_rev1_1_holes() {
 
 
 //------------------------------------------------------------------------
-// Raspberry Pi 3 Model B v.1.2
+// Raspberry Pi 3 Model B v.1.2.
 //------------------------------------------------------------------------
 module board_raspberrypi_3_model_b() {
     x  = 56;     y = 85;    z = 1.60;  // Measured PCB size
@@ -300,8 +300,9 @@ module board_raspberrypi_3_model_b() {
         translate([20.5, 85 - uy + 2.1, 0])         usb_connector(ux, uy, uz);
         translate([x - hx + 1.8, 25, 0])            hdmi_connector(hx, hy, hz);
         translate([x - 12.8, 50, 0])                audio_video(12.8);
+        translate([20.5, 0.8, -z])                  micro_sd_card();
         translate([x - mx + 1, 7, 0])               microusb_connector(mx, my, mz);
-        translate([x + 2.2, 7.2, 0.3])              rotate(a=90, v=[0, 0, 1]) usb_male_micro_b_connector();
+        translate([x + 2.2, 10.55, 1.2])            rotate(a=270, v=[0, 0, 1]) usb_male_micro_b_connector();
         translate([0, 0, -z]) {
             color("green") linear_extrude(height=z)
                 difference() {
@@ -318,6 +319,7 @@ module board_raspberrypi_3_model_b() {
 }
 
 //------------------------------------------------------------------------
+// Holes for Raspberry Pi 3 Model B v.1.2.
 //------------------------------------------------------------------------
 module raspberrypi_3_model_b_holes() {
     x = 56;
