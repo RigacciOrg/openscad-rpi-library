@@ -14,7 +14,7 @@ include <misc_parts.scad>;
 //------------------------------------------------------------------------
 module lcd_1602a() {
     $fn = 32;
-    translate([ 4.5, 5.5, 1.8])  color("black") cube([71, 24, 7]);
+    translate([4.5, 5.5, 1.8])  color([64/255, 64/255, 128/255]) cube([71, 24, 7]);
     color("green") linear_extrude(height = 1.8) difference() {
         square(size=[80, 36]);
         translate([3, 3])           circle(r=3.2/2, center = true);
