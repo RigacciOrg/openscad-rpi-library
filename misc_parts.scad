@@ -33,12 +33,14 @@ module rocker_switch() {
 //------------------------------------------------------------------------
 module coax_power_plug() {
     $fn = 32;
-    translate([0, 0, -4]) color("silver") cylinder(r = 5/2, h = 8, center = true);
-    color([64/255, 64/255, 64/255]) {
-        translate([0, 0, -9])    cylinder(r = 5/2, h = 2, center = true);
-        translate([0, 0, 5])    cylinder(r1 = 8/2,  r2 = 10/2, h = 10, center = true);
-        translate([0, 0, 19])   cylinder(r1 = 10/2, r2 = 7/2,  h = 18, center = true);
-        translate([0, 0, 35.5]) cylinder(r = 4/2, h = 15, center = true);
+    rotate(a=270, v=[1, 0, 0]) {
+    translate([0, 0, -4]) color("silver") cylinder(r=5/2, h=8, center=true);
+        color([82/255, 82/255, 82/255]) {
+            translate([0, 0, 5])    cylinder(r1=8/2,  r2=10/2, h=10, center=true);
+            translate([0, 0, 19])   cylinder(r1=10/2, r2=7/2,  h=18, center=true);
+            translate([0, 0, 35.5]) cylinder(r=4/2, h=15, center=true); // Cable
+            translate([0, 0, -9])   cylinder(r=5/2, h=2,  center=true); // Tip
+        }
     }
 }
 
@@ -215,29 +217,31 @@ module sd_card() {
 
 //------------------------------------------------------------------------
 // USB male Type-A connector.
-// TODO: Centrate to the origin, make consistent with other USB conn.
 //------------------------------------------------------------------------
 module usb_male_type_a_connector() {
-    color([64/255, 64/255, 64/255]) {
-        translate([0, 22/2, 0]) cube(size = [16, 22, 8], center = true);
-        translate([0, 22 + 4/2, 0]) cube(size = [7,  4,  7], center = true);
-        translate([0, 22 + 4 + 15/2, 0]) rotate(a = 90, v = [1, 0, 0]) cylinder(r = 4/2, h = 15, center = true, $fn = 16);
+    $fn = 32;
+    translate([0, -12/2, 0]) color("silver") cube(size=[12, 12, 4], center=true);
+    color([82/255, 82/255, 82/255]) {
+        translate([0, 22/2, 0]) cube(size=[16, 22, 8], center=true);
+        translate([0, 22 + 4/2, 0]) cube(size=[7,  4,  7], center=true);
+        translate([0, 22 + 4 + 15/2, 0]) rotate(a=90, v=[1, 0, 0]) cylinder(r=4/2, h=15, center=true);
     }
-    color("silver")
-        translate([0, -12/2, 0]) cube(size = [12, 12, 4], center = true);
 }
 
 //------------------------------------------------------------------------
 // USB male Micro-B connector.
-// TODO: Centrate to the origin, make consistent with other USB conn.
 //------------------------------------------------------------------------
 module usb_male_micro_b_connector() {
-    x1 = 6.85; y1 = 6.70; z1 = 1.80;
-    x2 = 10.5; y2 = 19;   z2 = 7;
-    r1 = 3.2;  r2 = 2.4; h = 10;
-    color("silver") cube([x1, y1, z1]);
-    color("black") translate([-(x2 - x1) / 2, -19, -(z2 - z1) / 2]) cube([x2, y2, z2]);
-    color("black") translate([x1/2, -y2, z1/2]) rotate(a=90, v=[1, 0, 0]) cylinder(r1=r1, r2=r2, h=h);
+    x1 = 6.85; y1 = 6.70; z1 = 1.80; // Metal part
+    x2 = 10.5; y2 = 19;   z2 = 7;    // Plastic part
+    r1 = 3.2;  r2 = 2.4; h = 10;     // Plastic cone part
+    $fn = 32;
+    translate([0, -y1/2, 0]) color("silver") cube([x1, y1, z1], center = true);
+    color([82/255, 82/255, 82/255]) {
+        translate([0, y2/2, 0]) cube([x2, y2, z2], center = true);
+        translate([0, y2 + h/2, 0]) rotate(a=270, v=[1, 0, 0]) cylinder(r1=r1, r2=r2, h=h, center=true);
+        translate([0, y2 + h + 5, 0]) rotate(a=90, v=[1, 0, 0]) cylinder(r=3.5/2, h=10, center=true);
+    }
 }
 
 //------------------------------------------------------------------------
