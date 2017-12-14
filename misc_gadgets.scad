@@ -19,8 +19,7 @@ module usb_hub_4p_amazon_basics() {
     }
     for (x_pos = [15, 35, 55, 75])
         translate([x_pos, -2, 9]) rotate(a = 180, v = [1, 0, 0]) usb_male_type_a_connector();
-    // TODO: Check effective position of socket.
-    translate([x + 1, 32, z/2]) rotate(a=270, v=[0, 0, 1]) coax_power_plug();
+    translate([x + 1, 31, z/2]) rotate(a=270, v=[0, 0, 1]) coax_power_plug();
 }
 
 //------------------------------------------------------------------------
