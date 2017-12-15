@@ -1,14 +1,6 @@
 # Gallery
 
-![board_raspberrypi_model_b_v2](board_raspberrypi_model_b_v2.png "Moule board_raspberrypi_model_b_v2")
-
-![board_raspberrypi_model_a_plus_rev1_1](board_raspberrypi_model_a_plus_rev1_1.png "Module board_raspberrypi_model_a_plus_rev1_1")
-
-![board_raspberrypi_3_model_b](board_raspberrypi_3_model_b.png "Module board_raspberrypi_3_model_b")
-
-## Test 2
-
-<img src="https://raw.githubusercontent.com/RigacciOrg/openscad-rpi-library/master/img/board_2relays_keyes.png" width="180">
-<img src="https://raw.githubusercontent.com/RigacciOrg/openscad-rpi-library/master/img/board_raspberrypi_model_b_v2.png" width="180">
-
-<img title="board_raspberrypi_model_a_plus_rev1_1()" src="https://raw.githubusercontent.com/RigacciOrg/openscad-rpi-library/master/img/board_raspberrypi_model_a_plus_rev1_1.png" width="180"><img alt="board_raspberrypi_3_model_b()" src="https://raw.githubusercontent.com/RigacciOrg/openscad-rpi-library/master/img/board_raspberrypi_3_model_b.png" width="180">
+![board_2relays_keyes](board_2relays_keyes.png "board_2relays_keyes")
+![board_raspberrypi_model_b_v2](board_raspberrypi_model_b_v2.png "board_raspberrypi_model_b_v2")
+![board_raspberrypi_model_a_plus_rev1_1](board_raspberrypi_model_a_plus_rev1_1.png "board_raspberrypi_model_a_plus_rev1_1")
+![board_raspberrypi_3_model_b](board_raspberrypi_3_model_b.png "board_raspberrypi_3_model_b")
