@@ -1,6 +1,6 @@
 //------------------------------------------------------------------------
 // OpenSCAD models of miscellaneous components and devices:
-// Raspberry Pi Model B v.2, SainSmart Relays, PCD8544 LCD, etc.
+// various Raspberry Pi models, SainSmart Relays, PCD8544 LCD, etc.
 //
 // Author:      Niccolo Rigacci <niccolo@rigacci.org>
 // Version:     1.0 2017-12-14
@@ -8,6 +8,10 @@
 //------------------------------------------------------------------------
 
 include <misc_parts.scad>;
+
+// Interference for 3D union(), difference() and intersection();
+// used to avoid the manifold problem.
+interf = 0.1;
 
 //------------------------------------------------------------------------
 // 1602A LCD panel 16x2 characters.
@@ -49,11 +53,11 @@ module board_2relays_sainsmart() {
     pcb_thick = 1.6;
     difference() {
         color("darkgreen") cube([39.0, 51.0, pcb_thick]);
-        translate([2.75, 2.75, -overlap]) {
-            translate([   0,    0, 0]) cylinder(r=1.5, h=(2 + overlap * 2), $fn=16);
-            translate([33.5,    0, 0]) cylinder(r=1.5, h=(2 + overlap * 2), $fn=16);
-            translate([   0, 45.5, 0]) cylinder(r=1.5, h=(2 + overlap * 2), $fn=16);
-            translate([33.5, 45.5, 0]) cylinder(r=1.5, h=(2 + overlap * 2), $fn=16);
+        translate([2.75, 2.75, -interf]) {
+            translate([   0,    0, 0]) cylinder(r=1.5, h=(2 + interf * 2), $fn=16);
+            translate([33.5,    0, 0]) cylinder(r=1.5, h=(2 + interf * 2), $fn=16);
+            translate([   0, 45.5, 0]) cylinder(r=1.5, h=(2 + interf * 2), $fn=16);
+            translate([33.5, 45.5, 0]) cylinder(r=1.5, h=(2 + interf * 2), $fn=16);
         }
     }
     translate([ 3.8, 12.2, pcb_thick])  color("blue") cube([15, 19, 16]);
@@ -72,11 +76,11 @@ module board_2relays_keyes() {
     // Board with 3.6 mm holes.
     difference() {
         color("red") cube([45.5, 55, 2]);
-        translate([3.5, 9, -overlap]) {
-            translate([ 0,  0, 0]) cylinder(r=1.8, h=(2 + overlap * 2), $fn=16);
-            translate([38,  0, 0]) cylinder(r=1.8, h=(2 + overlap * 2), $fn=16);
-            translate([0,  40, 0]) cylinder(r=1.8, h=(2 + overlap * 2), $fn=16);
-            translate([38, 40, 0]) cylinder(r=1.8, h=(2 + overlap * 2), $fn=16);
+        translate([3.5, 9, -interf]) {
+            translate([ 0,  0, 0]) cylinder(r=1.8, h=(2 + interf * 2), $fn=16);
+            translate([38,  0, 0]) cylinder(r=1.8, h=(2 + interf * 2), $fn=16);
+            translate([0,  40, 0]) cylinder(r=1.8, h=(2 + interf * 2), $fn=16);
+            translate([38, 40, 0]) cylinder(r=1.8, h=(2 + interf * 2), $fn=16);
         }
     }
     translate([7.5, 15, 2])  color("blue") cube([15, 19, 16]);
@@ -91,11 +95,11 @@ module board_2relays_keyes() {
 module board_pcd8544_blue() {
     difference() {
         color("darkblue") cube([43, 45.5, 1.2]);
-        translate([4.25, 2.25, -overlap]) {
-            translate([ 0.0,  0, 0]) cylinder(r=1.6, h=(1.2 + overlap * 2), $fn=16);
-            translate([34.5,  0, 0]) cylinder(r=1.6, h=(1.2 + overlap * 2), $fn=16);
-            translate([ 0.0, 41, 0]) cylinder(r=1.6, h=(1.2 + overlap * 2), $fn=16);
-            translate([34.5, 41, 0]) cylinder(r=1.6, h=(1.2 + overlap * 2), $fn=16);
+        translate([4.25, 2.25, -interf]) {
+            translate([ 0.0,  0, 0]) cylinder(r=1.6, h=(1.2 + interf * 2), $fn=16);
+            translate([34.5,  0, 0]) cylinder(r=1.6, h=(1.2 + interf * 2), $fn=16);
+            translate([ 0.0, 41, 0]) cylinder(r=1.6, h=(1.2 + interf * 2), $fn=16);
+            translate([34.5, 41, 0]) cylinder(r=1.6, h=(1.2 + interf * 2), $fn=16);
         }
     }
     // Frame and LCD screen.
@@ -119,11 +123,11 @@ module board_pcd8544_blue() {
 module board_pcd8544_red() {
     difference() {
         color("red") cube([43.5, 43.0, 1.2]);
-        translate([1.75, 2.0, -overlap]) {
-            translate([ 0,  0, 0]) cylinder(r=1.25, h=(1.2 + overlap * 2), $fn=16);
-            translate([40,  0, 0]) cylinder(r=1.25, h=(1.2 + overlap * 2), $fn=16);
-            translate([ 0, 39, 0]) cylinder(r=1.25, h=(1.2 + overlap * 2), $fn=16);
-            translate([40, 39, 0]) cylinder(r=1.25, h=(1.2 + overlap * 2), $fn=16);
+        translate([1.75, 2.0, -interf]) {
+            translate([ 0,  0, 0]) cylinder(r=1.25, h=(1.2 + interf * 2), $fn=16);
+            translate([40,  0, 0]) cylinder(r=1.25, h=(1.2 + interf * 2), $fn=16);
+            translate([ 0, 39, 0]) cylinder(r=1.25, h=(1.2 + interf * 2), $fn=16);
+            translate([40, 39, 0]) cylinder(r=1.25, h=(1.2 + interf * 2), $fn=16);
         }
     }
     // Frame and LCD screen.
