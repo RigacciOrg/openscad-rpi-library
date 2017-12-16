@@ -1,4 +1,4 @@
-# Gallery
+# Parts Gallery
 
 ![board_2relays_keyes](board_2relays_keyes.png "board_2relays_keyes")
 ![board_2relays_sainsmart](board_2relays_sainsmart.png "board_2relays_sainsmart")
