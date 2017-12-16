@@ -11,6 +11,8 @@ the projects. I used the same OpenSCAD software to design
 
 See the [img/README.md file](img/README.md) for a gallery of snapshot images.
 
+![Sample Gallery](img/gallery.png "Sample Gallery")
+
 #### Raspberry Pi Boards
 
 * Raspberry Pi Model B v.2
