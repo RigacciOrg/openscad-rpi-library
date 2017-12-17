@@ -9,7 +9,7 @@ of the overall assemble, to aid in building a suitable case for
 the projects. I used the same OpenSCAD software to design 
 3D-printed or laser-cut cases.
 
-See the [img/README.md file](img/README.md) for a gallery of snapshot images.
+See the **[img/README.md file](img/README.md)** for a gallery of snapshot images.
 
 ![Sample Gallery](img/gallery.png "Sample Gallery")
 
@@ -43,6 +43,6 @@ See the [img/README.md file](img/README.md) for a gallery of snapshot images.
 #### Gadgets
 
 * USB external hard disk 2.5" (Toshiba)
-* UBS hub 4 ports (Amazon Basics)
+* UBS 3.0 hub 4 ports, Amazon Basics (**WARNING**: does not work with the Raspberry Pi, VIA Labs chip, USB ID 2109:2811)
 * UGREEN USB Audio Adapter
 * Nano WiFi USB dongle by Edimax
