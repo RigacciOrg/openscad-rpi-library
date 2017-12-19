@@ -11,7 +11,6 @@
 ![coax_power_plug_3p5](coax_power_plug_3p5.png "coax_power_plug_3p5")
 ![coax_power_socket](coax_power_socket.png "coax_power_socket")
 ![dupont_female](dupont_female.png "dupont_female")
-![gallery](gallery.png "gallery")
 ![lcd_1602a](lcd_1602a.png "lcd_1602a")
 ![pin_female](pin_female.png "pin_female")
 ![pin_headers](pin_headers.png "pin_headers")
