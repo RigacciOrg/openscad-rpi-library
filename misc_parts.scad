@@ -45,6 +45,23 @@ module coax_power_plug() {
 }
 
 //------------------------------------------------------------------------
+// Coaxial power plug 3.5 mm.
+//------------------------------------------------------------------------
+module coax_power_plug_3p5() {
+    $fn = 32;
+    rotate(a=270, v=[1, 0, 0]) {
+    translate([0, 0, -4.5]) color("silver") cylinder(r=3.5/2, h=9, center=true);
+        color([82/255, 82/255, 82/255]) {
+            translate([0, 0, 6])    cylinder(r1=7/2,  r2=10/2, h=12, center=true);
+            translate([0, 0, 20])   cylinder(r1=10/2, r2=7/2,  h=16, center=true);
+            translate([0, 0, 35.5]) cylinder(r=4/2,   h=15, center=true); // Cable
+            translate([0, 0, -9.5]) cylinder(r=3.5/2, h=1,  center=true); // Tip
+        }
+    }
+}
+
+
+//------------------------------------------------------------------------
 // Coaxial power plug socket, with 2.1 mm pin.
 //------------------------------------------------------------------------
 module coax_power_socket() {
@@ -241,6 +258,26 @@ module usb_male_micro_b_connector() {
         translate([0, y2/2, 0]) cube([x2, y2, z2], center = true);
         translate([0, y2 + h/2, 0]) rotate(a=270, v=[1, 0, 0]) cylinder(r1=r1, r2=r2, h=h, center=true);
         translate([0, y2 + h + 5, 0]) rotate(a=90, v=[1, 0, 0]) cylinder(r=3.5/2, h=10, center=true);
+    }
+}
+
+//------------------------------------------------------------------------
+// USB male Type-B plug.
+//------------------------------------------------------------------------
+module usb_male_type_b_connector() {
+    x1 = 8.0; y1 = 12.5; z1 = 7.5;  // Metal part
+    x2 = 12; y2 = 31;   z2 = 11;    // Plastic part
+    r1 = 4;  r2 = 3.5; h = 12;      // Plastic cone part
+    $fn = 32;
+    color("silver") difference() {
+        translate([0, -y1/2, 0]) cube([x1, y1, z1], center = true);
+        translate([ x1/2, -y1/2, z1/2]) rotate(a=45, v=[0,1,0]) cube([2, y1 + 0.2, 2], center = true);
+        translate([-x1/2, -y1/2, z1/2]) rotate(a=45, v=[0,1,0]) cube([2, y1 + 0.2, 2], center = true);
+    }
+    color([82/255, 82/255, 82/255]) {
+        translate([0, y2/2, 0]) cube([x2, y2, z2], center = true);
+        translate([0, y2 + h/2, 0]) rotate(a=270, v=[1, 0, 0]) cylinder(r1=r1, r2=r2, h=h, center=true);
+        translate([0, y2 + h + 5, 0]) rotate(a=90, v=[1, 0, 0]) cylinder(r=4/2, h=10, center=true);
     }
 }
 

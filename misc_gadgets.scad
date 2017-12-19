@@ -25,6 +25,32 @@ module usb_hub_4p_amazon_basics() {
 }
 
 //------------------------------------------------------------------------
+// Powered USB 2.0 Hub 7 ports, Amazon Basics.
+//------------------------------------------------------------------------
+module usb2_hub_7p_amazon_basics() {
+    color([92/255, 92/255, 92/255]) {
+      linear_extrude(height=24)
+        union() {
+            polygon(points=[[0,0],[68.5,0],[68.5,53.5],[42,83.3],[0,87.5],[0,82.5],[5,81],[5,6.5],[0,4.5]]);
+            translate([68.5-30, 53.5]) circle(r=30, center=true, $fn=64);
+        }
+      translate([37.25,41.5,-5])
+        linear_extrude(height=5.1)
+            difference() {
+                square([24.5,23],center=true);
+                square([18,17],center=true);
+                square([5.8,23.5],center=true);
+            }
+    }
+    for (y_pos = [36, 45.25, 54.50, 63.75, 73])
+        translate([3, y_pos, 14]) rotate(a=90, v=[0,0,1]) rotate(a=90, v=[0, 1, 0]) usb_male_type_a_connector();
+    for (y_pos = [17.0, 26.25])
+        translate([70.5, y_pos, 14]) rotate(a=270, v=[0,0,1]) rotate(a=90, v=[0, 1, 0]) usb_male_type_a_connector();
+    translate([1.5, 16.5, 12.5]) rotate(a=90, v=[0,0,1]) usb_male_type_b_connector();
+    translate([1.5, 28.0,  9.0]) rotate(a=90, v=[0, 0, 1]) coax_power_plug_3p5();
+}
+
+//------------------------------------------------------------------------
 // UGREEN USB Audio Adapter.
 //------------------------------------------------------------------------
 module usb_audio_adapter_ugreen() {
