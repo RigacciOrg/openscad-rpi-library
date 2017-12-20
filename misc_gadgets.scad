@@ -28,11 +28,12 @@ module usb_hub_4p_amazon_basics() {
 // Powered USB 2.0 Hub 7 ports, Amazon Basics.
 //------------------------------------------------------------------------
 module usb2_hub_7p_amazon_basics() {
+    x = 68.5; y = 87.5; z = 24;
     color([92/255, 92/255, 92/255]) {
-      linear_extrude(height=24)
+      linear_extrude(height=z)
         union() {
-            polygon(points=[[0,0],[68.5,0],[68.5,53.5],[42,83.3],[0,87.5],[0,82.5],[5,81],[5,6.5],[0,4.5]]);
-            translate([68.5-30, 53.5]) circle(r=30, center=true, $fn=64);
+            polygon(points=[[0,0],[x,0],[x,53.5],[42,83.3],[0,y],[0,82.5],[5,81],[5,6.5],[0,4.5]]);
+            translate([x-30, 53.5]) circle(r=30, center=true, $fn=64);
         }
       translate([37.25,41.5,-5])
         linear_extrude(height=5.1)
