@@ -6,34 +6,36 @@ thick = 4;
 
 // Inside size.
 case_x = 250;
-case_y = 100;
-case_z =  50;
+case_y = 130;
+case_z =  60;
 
 //
 front_edge = 5;
 side_edge = 1;
 
-display_hole_x = 60;
-display_hole_y = 20;
+display_hole_x = 73;
+display_hole_y = 25;
 
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 module inside_components() {
-    usb_hub_y = 41;
-    usb_audio_y = 70;
-    translate([0, 0, usb_hub_y])
-        rotate(a=270, v=[1, 0, 0])
-            usb_hub_4p_amazon_basics();
-    translate([15, usb_audio_y + 45, 0])
+    usb_hub_x = 87.5; usb_hub_y = 68.5; usb_hub_z = 24;
+    usb_audio_x = 55; usb_audio_y = 70;
+    display_x = 80; display_y = 36;
+    hd_y = 79;
+    translate([2 + usb_hub_x, case_y - usb_hub_y, 0])
+        rotate(a=90, v=[0, 0, 1])
+            usb2_hub_7p_amazon_basics();
+    translate([2 + usb_hub_x + 5, case_y, 0])
         rotate(a=270, v=[0, 0, 1])
             usb_audio_adapter_ugreen();
-    translate([0, 105, 24])
+    translate([2, case_y - 3, usb_hub_z + 2])
         rotate(a=270, v=[0, 0, 1])
             usb_hard_disk_toshiba();
-    translate([220, 15, 0])
+    translate([case_x - 5, 5, 2])
         rotate(a=90, v=[0, 0, 1])
             board_raspberrypi_3_model_b();
-    translate([140, 1.8, 0])
+    translate([(case_x - display_x)/2, 1.8, (case_z - display_y)/2])
         rotate(a=90, v=[1, 0, 0])
             lcd_1602a();
 }
@@ -57,7 +59,8 @@ module side_panel() {
 module top_panel_2d() {
     difference() {
         square(size = [case_x + (thick + side_edge) * 2, case_y + (thick + front_edge) * 2]);
-        translate([30, 50]) venting_slots(40, 30, 2, 4);
+        translate([ 30, 70]) venting_slots(60, 50, 2, 4);
+        translate([180, 20]) venting_slots(60, 50, 2, 4);
     }
 }
 module top_panel() {
@@ -85,7 +88,13 @@ module front_panel() {
 }
 
 module back_panel_2d() {
-    square(size = [case_x, case_z]);
+    offset_z = 0;
+    usb_hub_x = 87.5;
+    difference() {
+        square(size = [case_x, case_z]);
+        translate([usb_hub_x - 34, offset_z + 3]) square(size = [28, 22]);
+        translate([usb_hub_x + 20, offset_z + 7]) square(size = [28, 15]);
+    }
 }
 module back_panel() {
     linear_extrude(height = thick) back_panel_2d();
@@ -104,4 +113,4 @@ module case_assembled() {
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 case_assembled();
-inside_components();
+translate([side_edge + thick, front_edge + thick, thick]) inside_components();
