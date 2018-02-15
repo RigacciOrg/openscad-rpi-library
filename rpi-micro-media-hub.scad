@@ -43,9 +43,21 @@ module inside_components() {
 //------------------------------------------------------------------------
 // Case components.
 //------------------------------------------------------------------------
-module venting_slots(x, y, width, space) {
-    for (slot_y = [0 : space : y]) {
-        translate([0, slot_y]) square(size = [x, width]);
+
+//---------------------------------------------------------------
+// Make a centered array of (X x Y) holes.
+//---------------------------------------------------------------
+module vent_holes(x, y, diameter) {
+    $fn = 6;
+    step = diameter * 2;
+    radius = diameter / 1.8;
+    offset_x = (step * (x - 1)) / 2;
+    offset_y = (step * (y - 1)) / 2;
+    for (i = [1:x]) {
+        for (j = [1:y]) {
+            translate([(i - 1) * step - offset_x, (j -1) * step - offset_y])
+                circle(r=radius);
+        }
     }
 }
 
@@ -59,8 +71,8 @@ module side_panel() {
 module top_panel_2d() {
     difference() {
         square(size = [case_x + (thick + side_edge) * 2, case_y + (thick + front_edge) * 2]);
-        translate([ 30, 70]) venting_slots(60, 50, 2, 4);
-        translate([180, 20]) venting_slots(60, 50, 2, 4);
+        translate([ 60, 95]) vent_holes(12, 9, 3.5);
+        translate([210, 45]) vent_holes(10, 7, 3.5);
     }
 }
 module top_panel() {
@@ -70,7 +82,13 @@ module top_panel() {
 module bottom_panel_2d() {
     difference() {
         square(size = [case_x + (thick + side_edge) * 2, case_y + (thick + front_edge) * 2]);
-        translate([80, 50]) venting_slots(40, 30, 2, 4);
+        translate([200, 105]) vent_holes(10, 6, 3.5);
+        translate([side_edge + thick, front_edge + thick])
+            translate([48, 98.75])
+                square([23+0.2,24.5+0.2],center=true);
+            translate([case_x - 5, 5, 2])
+                rotate(a=90, v=[0, 0, 1])
+                    raspberrypi_3_model_b_holes();
     }
 }
 module bottom_panel() {
@@ -101,12 +119,12 @@ module back_panel() {
 }
 
 module case_assembled() {
-    //bottom_panel();
-    translate([0, 0, case_z + thick]) %top_panel();
-    translate([thick + side_edge, 0, thick])              rotate(a = 90, v = [0, -1, 0]) %side_panel();
-    translate([case_x + side_edge + thick * 2, 0, thick]) rotate(a=90, v=[0, -1, 0])     %side_panel();
-    translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0]) front_panel();
-    translate([side_edge + thick, front_edge + thick * 2 + case_y, thick]) rotate(a = 90, v = [1, 0, 0]) back_panel();
+    bottom_panel();
+    //translate([0, 0, case_z + thick]) top_panel();
+    //translate([thick + side_edge, 0, thick])              rotate(a = 90, v = [0, -1, 0]) %side_panel();
+    //translate([case_x + side_edge + thick * 2, 0, thick]) rotate(a=90, v=[0, -1, 0])     %side_panel();
+    //translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0]) front_panel();
+    //translate([side_edge + thick, front_edge + thick * 2 + case_y, thick]) rotate(a = 90, v = [1, 0, 0]) back_panel();
 }
 
 
