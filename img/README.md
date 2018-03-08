@@ -19,6 +19,7 @@
 ![pin_right_angle_low](pin_right_angle_low.png "pin_right_angle_low")
 ![pin_right_angle_low_custom](pin_right_angle_low_custom.png "pin_right_angle_low_custom")
 ![push_button](push_button.png "push_button")
+![push_switch_8mm](push_switch_8mm.png "push_switch_8mm")
 ![rocker_switch](rocker_switch.png "rocker_switch")
 ![usb2_hub_7p_amazon_basics](usb2_hub_7p_amazon_basics.png "usb2_hub_7p_amazon_basics")
 ![usb_audio_adapter_ugreen](usb_audio_adapter_ugreen.png "usb_audio_adapter_ugreen")

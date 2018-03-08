@@ -86,6 +86,25 @@ module coax_power_socket() {
 }
 
 //------------------------------------------------------------------------
+// Metal momentary push switch 8 mm.
+//------------------------------------------------------------------------
+module push_switch_8mm() {
+    $fn = 32;
+    h1 = 3.3;
+    h2 = 9.0;
+    h3 = h2 + 1.0;
+    x1 = 1.5; y1 = 0.5; z1 = 4.5;
+    step = 3;
+    translate([0, 0,   0]) color("silver") cylinder(r=12/2,  h=h1);
+    translate([0, 0,  h1]) color("silver") cylinder(r=7.5/2, h=1.5);
+    translate([0, 0, -h2]) color("silver") cylinder(r=7.8/2, h=h2);
+    translate([0, 0, -h3]) color("white")  cylinder(r=4.8/2, h=1.1);
+    translate([0, 0,  -6]) color("gray")   cylinder(r=11.3/2, h=2.4, $fn=6);
+    translate([-(x1 / 2),  (step - y1) / 2, -(h3 + z1)]) color("gold") cube([x1, y1, z1]);
+    translate([-(x1 / 2), -(step + y1) / 2, -(h3 + z1)]) color("gold") cube([x1, y1, z1]);
+}
+
+//------------------------------------------------------------------------
 // Mini push button.
 //------------------------------------------------------------------------
 module push_button() {
