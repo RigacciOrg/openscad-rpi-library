@@ -32,6 +32,7 @@ See the **[img/README.md file](img/README.md)** for a gallery of snapshot images
 * Coaxial power plug 5.0 mm
 * Coaxial power plug socket, with 2.1 mm pin
 * Mini push button
+* Metal momentary push switch 8 mm
 * Matrix of 2.54 mm dupont female connectors
 * Matrix of 2.54 mm female connectors
 * Matrix of 2.54 mm pins
