@@ -28,14 +28,14 @@ module usb_hub_4p_amazon_basics() {
 // Powered USB 2.0 Hub 7 ports, Amazon Basics.
 //------------------------------------------------------------------------
 module usb2_hub_7p_amazon_basics() {
-    x = 68.5; y = 87.5; z = 24;
+    x = 68.5; y = 87; z = 24.5;
     color([92/255, 92/255, 92/255]) {
       linear_extrude(height=z)
         union() {
             polygon(points=[[0,0],[x,0],[x,53.5],[42,83.3],[0,y],[0,82.5],[5,81],[5,6.5],[0,4.5]]);
             translate([x-30, 53.5]) circle(r=30, center=true, $fn=64);
         }
-      translate([37.25,41.5,-5])
+      translate([37, 41, -5])
         linear_extrude(height=5.1)
             difference() {
                 square([24.5,23],center=true);
@@ -55,12 +55,16 @@ module usb2_hub_7p_amazon_basics() {
 // UGREEN USB Audio Adapter.
 //------------------------------------------------------------------------
 module usb_audio_adapter_ugreen() {
-    x = 70; y = 55; z = 22; rca_h = 5.5; rca_d = 8.0;
-    color([224/255, 224/255, 224/255]) cube(size = [x, y, z]);
-    translate([-rca_h/2,     20, 15]) rotate(a = 90, v = [0, 1, 0]) color("gold") cylinder(r = rca_d/2, h = rca_h, center = true, $fn = 32);
-    translate([-rca_h/2, y - 20, 15]) rotate(a = 90, v = [0, 1, 0]) color("gold") cylinder(r = rca_d/2, h = rca_h, center = true, $fn = 32);
-    translate([x + 6.5/2, y / 2, z/2]) rotate(a = 90, v = [0, 1, 0]) color("white") cylinder(r = 8/2,   h = 6.5, $fn=32, center=true);
-    translate([x + 20/2,  y / 2, z/2]) rotate(a = 90, v = [0, 1, 0]) color("white") cylinder(r = 4.5/2, h = 20,  $fn=32, center=true);
+    x = 70; y = 55; z = 22; rca_h = 5.5; rca_d = 8.4;
+    color([224/255, 224/255, 224/255]) difference() {
+        cube(size = [x, y, z]);
+        translate([-interf,   7.5, 10]) rotate(a=90, v=[0, 1, 0]) cylinder(r=(3.5/2), h=20, $fn=24);
+        translate([-interf, y-7.5, 10]) rotate(a=90, v=[0, 1, 0]) cylinder(r=(3.5/2), h=20, $fn=24);
+    }
+    translate([-rca_h/2,   20.2, 14.8]) rotate(a = 90, v = [0, 1, 0]) color("gold") cylinder(r = rca_d/2, h = rca_h, center = true, $fn = 32);
+    translate([-rca_h/2, y-20.2, 14.8]) rotate(a = 90, v = [0, 1, 0]) color("gold") cylinder(r = rca_d/2, h = rca_h, center = true, $fn = 32);
+    translate([x + 6.5/2,  y / 2, z/2]) rotate(a = 90, v = [0, 1, 0]) color("white") cylinder(r = 8/2,   h = 6.5, $fn=32, center=true);
+    translate([x + 20/2,   y / 2, z/2]) rotate(a = 90, v = [0, 1, 0]) color("white") cylinder(r = 4.5/2, h = 20,  $fn=32, center=true);
 }
 
 //------------------------------------------------------------------------
