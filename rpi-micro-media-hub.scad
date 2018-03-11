@@ -1,13 +1,15 @@
 include <misc_gadgets.scad>;
 include <misc_boards.scad>;
 
+explode = 0;
+
 // Wall thikness.
 thick = 4;
 
 // Inside size.
 case_x = 250;
 case_y = 150;
-case_z =  60;
+case_z =  70;
 
 //
 front_edge = 5;
@@ -24,18 +26,31 @@ usb_audio_offset_x = usb_hub_offset_x + 5;
 usb_audio_offset_y = case_y;
 
 //------------------------------------------------------------------------
-// Array of push buttons.
+// Spacing and position for push buttons.
+//------------------------------------------------------------------------
+buttons_w = 32;
+buttons_h = 32;
+buttons_pos = [
+  [0, -buttons_h/2, 0],			// Bottom
+  [-buttons_w/2, 0, 0],			// Left
+  [buttons_w/2,  0, 0],			// Right
+  [0,  buttons_h/2, 0],			// Top
+  [0,            0, 0],			// Center
+  [-buttons_w*1.2, -buttons_h/2, 0],	// Lower left
+  [-buttons_w*1.2,  buttons_h/2, 0]	// Upper left
+];
+
+//------------------------------------------------------------------------
+// Array of push buttons and holes.
 //------------------------------------------------------------------------
 module buttons_array() {
-    x = 32;
-    y = 32;
-    translate([0,    -y/2, 0]) push_switch_8mm();   // Bottom
-    translate([-x/2,    0, 0]) push_switch_8mm();   // Left
-    translate([x/2,     0, 0]) push_switch_8mm();   // Right
-    translate([0,     y/2, 0]) push_switch_8mm();   // Top
-    translate([0,       0, 0]) push_switch_8mm();   // Center
-    translate([-x*1.2, -y/2, 0]) push_switch_8mm(); // Lower left
-    translate([-x*1.2,  y/2, 0]) push_switch_8mm(); // Upper left
+    translate([0, 0, explode])
+        for(position = buttons_pos)
+            translate(position) push_switch_8mm();
+}
+module buttons_holes() {
+    for(position = buttons_pos)
+        translate(position) circle(r=4, $fn=32);
 }
 
 //------------------------------------------------------------------------
@@ -102,7 +117,7 @@ module side_panel() {
 module top_panel_2d() {
     difference() {
         square(size = [case_x + (thick + side_edge) * 2, case_y + (thick + front_edge) * 2]);
-        translate([ 60, 95]) vent_holes(12, 9, 3.5);
+        translate([ 60, case_y-35]) vent_holes(12, 9, 3.5);
         translate([210, 45]) vent_holes(10, 7, 3.5);
     }
 }
@@ -115,7 +130,8 @@ module top_panel() {
 module bottom_panel_2d() {
     difference() {
         square(size = [case_x + (thick + side_edge) * 2, case_y + (thick + front_edge) * 2]);
-        translate([200, 105]) vent_holes(10, 6, 3.5);
+        translate([200, 110]) vent_holes(10, 8, 3.5);
+        translate([ 60,  40]) vent_holes(10, 6, 3.5);
         // Square hole for USB hub.
         translate([side_edge + thick, front_edge + thick])
             translate([usb_hub_offset_x - 52.6, usb_hub_offset_y + 24.6])
@@ -136,6 +152,7 @@ module front_panel_2d() {
     difference() {
         square(size = [case_x, case_z]);
         //translate([case_x / 2, case_z / 2]) square(size = [display_hole_x, display_hole_y], center = true);
+        translate([case_x/2, case_z/2]) buttons_holes();
     }
 }
 module front_panel() {
@@ -157,7 +174,7 @@ module back_panel() {
 
 module case_assembled() {
     bottom_panel();
-    //translate([0, 0, case_z + thick]) top_panel();
+    translate([0, 0, case_z + thick]) top_panel();
     translate([thick + side_edge, 0, thick])              rotate(a = 90, v = [0, -1, 0]) %side_panel();
     translate([case_x + side_edge + thick * 2, 0, thick]) rotate(a=90, v=[0, -1, 0])     %side_panel();
     translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0]) front_panel();
