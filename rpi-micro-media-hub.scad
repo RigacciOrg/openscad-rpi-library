@@ -160,16 +160,21 @@ module vent_holes(x, y, diameter) {
 }
 
 //---------------------------------------------------------------
+// Side panel, with an eventual slot for inserting the SD-Card.
 //---------------------------------------------------------------
-module side_panel_2d() {
+module side_panel_2d(sd_slot=false) {
     difference() {
         square(size = [case_z, case_y + (thick + front_edge) * 2]);
         for (pos = notch_z_hole_pos)
             translate(pos) square(size=[notch_x, thick], center=true);
+        if (sd_slot) {
+            translate([-interf, front_edge + thick + raspberry_offset_y + 20])
+                square(size=[6, 15]);
+        }
     }
 }
-module side_panel() {
-    linear_extrude(height = thick) side_panel_2d();
+module side_panel(sd_slot=false) {
+    linear_extrude(height = thick) side_panel_2d(sd_slot);
 }
 
 //---------------------------------------------------------------
@@ -267,7 +272,7 @@ module back_panel() {
 module case_assembled() {
     translate([0, 0, -explode]) bottom_panel();
     translate([thick + side_edge -explode, 0, thick])     rotate(a = 90, v = [0, -1, 0])       color("red") side_panel();
-    translate([case_x + side_edge + thick * 2 + explode, 0, thick]) rotate(a=90, v=[0, -1, 0]) color("red") side_panel();
+    translate([case_x + side_edge + thick * 2 + explode, 0, thick]) rotate(a=90, v=[0, -1, 0]) color("red") side_panel(sd_slot=true);
     translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0])    color("red") front_panel();
     translate([side_edge + thick, front_edge + thick * 2 + case_y, thick]) rotate(a = 90, v = [1, 0, 0]) color("red") back_panel();
     //translate([0, 0, case_z + thick]) top_panel();
