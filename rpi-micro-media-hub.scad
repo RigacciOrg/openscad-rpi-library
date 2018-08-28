@@ -12,9 +12,12 @@ case_x = 250;
 case_y = 150;
 case_z =  70;
 
-//
+// Some panels have an overlapping edge.
 front_edge = 6;
 side_edge = 3;
+
+// Hole for plastic tie, measure 1 x 3.5 mm.
+plastic_tie_hole = [1.2, 3.7];
 
 // Components position into the case
 display_hole_x     = 73;
@@ -79,20 +82,18 @@ notch_z_hole_pos = [
 // Holes for plastic cable ties, measure 1 x 3.5 mm.
 //------------------------------------------------------------------------
 module usb_audio_holes() {
-    s = [1.2, 3.7];
-    translate([  -1,  0]) square(size=s, center=true);
-    translate([55+1,  0]) square(size=s, center=true);
-    translate([55+1, 30]) square(size=s, center=true);
-    translate([  -1, 30]) square(size=s, center=true);
+    translate([  -1,  0]) square(size=plastic_tie_hole, center=true);
+    translate([55+1,  0]) square(size=plastic_tie_hole, center=true);
+    translate([55+1, 30]) square(size=plastic_tie_hole, center=true);
+    translate([  -1, 30]) square(size=plastic_tie_hole, center=true);
 }
 
 module usb_hd_holes() {
-    s = [1.2, 3.7];
     y1 = 8; y2 = 83;
-    translate([  -1, y1]) square(size=s, center=true);
-    translate([79+1, y1]) square(size=s, center=true);
-    translate([79+1, y2]) square(size=s, center=true);
-    translate([  -1, y2]) square(size=s, center=true);
+    translate([  -1, y1]) square(size=plastic_tie_hole, center=true);
+    translate([79+1, y1]) square(size=plastic_tie_hole, center=true);
+    translate([79+1, y2]) square(size=plastic_tie_hole, center=true);
+    translate([  -1, y2]) square(size=plastic_tie_hole, center=true);
 }
 
 //------------------------------------------------------------------------
@@ -168,8 +169,9 @@ module side_panel_2d(sd_slot=false) {
         for (pos = notch_z_hole_pos)
             translate(pos) square(size=[notch_x, thick], center=true);
         if (sd_slot) {
+            //translate([-interf, front_edge + thick + raspberry_offset_y + 18])
             translate([-interf, front_edge + thick + raspberry_offset_y + 20])
-                square(size=[6, 15]);
+                square(size=[7, 17]);
         }
     }
 }
@@ -208,8 +210,8 @@ module bottom_panel_2d() {
         translate([208, 110]) vent_holes(10, 8, 3.5);
         // Square hole for USB hub.
         translate([side_edge + thick, front_edge + thick])
-            translate([usb_hub_offset_x - 52.6, usb_hub_offset_y + 24.6])
-                square([23 + 0.2, 24.5 + 0.2]);
+            translate([usb_hub_offset_x - 52.6, usb_hub_offset_y + 23.5])
+                square([23.2 + 0.2, 24.3 + 0.2]);
         translate([side_edge + thick, front_edge + thick])
             translate([raspberry_offset_x, raspberry_offset_y, 2])
                 rotate(a=90, v=[0, 0, 1])
@@ -221,6 +223,10 @@ module bottom_panel_2d() {
         translate([hd_offset_x + side_edge + thick, case_y - 3 + front_edge + thick])
             rotate(a=270, v=[0, 0, 1])
                 usb_hd_holes();
+        // Holes for plastic ties holding the HDMI cable.
+        hdmi_pos = raspberry_offset_x - 43 + thick + side_edge + (21 / 2);
+        translate([hdmi_pos + 3.5, case_y + front_edge + thick - 7]) square(size=plastic_tie_hole, center=true);
+        translate([hdmi_pos - 3.5, case_y + front_edge + thick - 7]) square(size=plastic_tie_hole, center=true);
     }
 }
 module bottom_panel() {
@@ -255,7 +261,7 @@ module back_panel_2d() {
         translate([usb_hub_offset_x - 35.5, offset_z + 3]) square(size = [28, 22]);	// USB hole
         translate([usb_audio_offset_x + 13.5, offset_z + 7]) square(size = [28, 15]);	// RCA audio hole
         translate([usb_audio_offset_x +  3.5, offset_z + 6]) square(size = [48, 9]);
-        translate([raspberry_offset_x-43, 0]) square(size = [21, 13]); 			// HDMI cable hole
+        translate([raspberry_offset_x-43, -interf]) square(size = [21, 13+interf]);	// HDMI cable hole
         translate([case_x-16, 24]) circle(r=4, $fn=28);					// Power jack hole
     }
     for (pos = notch_z_pos)
@@ -275,10 +281,23 @@ module case_assembled() {
     translate([case_x + side_edge + thick * 2 + explode, 0, thick]) rotate(a=90, v=[0, -1, 0]) color("red") side_panel(sd_slot=true);
     translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0])    color("red") front_panel();
     translate([side_edge + thick, front_edge + thick * 2 + case_y, thick]) rotate(a = 90, v = [1, 0, 0]) color("red") back_panel();
-    //translate([0, 0, case_z + thick]) top_panel();
+    //translate([0, 0, case_z + thick + explode]) top_panel();
+}
+
+//------------------------------------------------------------------------
+//------------------------------------------------------------------------
+module case_layed_out() {
+    translate([0, 0]) bottom_panel_2d();
+    translate([0, -case_y - 30]) top_panel_2d();
+    translate([0, case_y + 30]) front_panel_2d();
+    translate([0, case_y + case_z + 40]) back_panel_2d();
+    translate([case_x + 30, 0]) side_panel_2d();
+    translate([case_x + 30, -case_y - 30]) side_panel_2d();
 }
 
 //------------------------------------------------------------------------
 //------------------------------------------------------------------------
 case_assembled();
-//translate([side_edge + thick, front_edge + thick, thick]) inside_components();
+translate([side_edge + thick, front_edge + thick, thick]) inside_components();
+
+//case_layed_out();
