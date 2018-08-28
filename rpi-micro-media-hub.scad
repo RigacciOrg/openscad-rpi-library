@@ -1,7 +1,23 @@
+//------------------------------------------------------------------------
+// OpenSCAD project of an enclosure for a Raspberry Pi media hub.
+//
+// The enclosure accomodates the following parts:
+//   * The Raspberry Pi 3 Model 3
+//   * A 7 ports powered USB hub
+//   * An USB audio dongle with RCA jacks
+//   * An USB external hard disk
+//   * Some push buttons on the front panel
+//
+// Author:      Niccolo Rigacci <niccolo@rigacci.org>
+// Version:     2.0 2018-08-28
+// License:     GNU General Public License v3.0
+//------------------------------------------------------------------------
+
 include <misc_gadgets.scad>;
 include <misc_boards.scad>;
 
-explode = 0;
+// Set greather than zero for an exploded 3D view.
+explode = 40;
 
 // Wall thikness.
 thick = 4;
@@ -15,6 +31,9 @@ case_z =  70;
 // Some panels have an overlapping edge.
 front_edge = 6;
 side_edge = 3;
+
+// Foot diameter.
+foot_d = 8;
 
 // Hole for plastic tie, measure 1 x 3.5 mm.
 plastic_tie_hole = [1.2, 3.7];
@@ -273,7 +292,29 @@ module back_panel() {
     linear_extrude(height = thick) back_panel_2d();
 }
 
+//------------------------------------------------------------------------
+// Four feet below the bottom panel.
+//------------------------------------------------------------------------
+module foot_2d() {
+    circle(r=foot_d, $fn=32);
+}
+module foot() {
+    linear_extrude(height = thick) foot_2d();
+}
+module feet_assembled() {
+    foot_offset = 3;
+    foot_x0 = foot_d + foot_offset;
+    foot_y0 = foot_d + foot_offset;
+    foot_x1 = case_x + (thick + side_edge)  * 2 - foot_d - foot_offset;
+    foot_y1 = case_y + (thick + front_edge) * 2 - foot_d - foot_offset;
+    translate([foot_x0, foot_y0, -(thick + explode * 1.3)]) foot();
+    translate([foot_x0, foot_y1, -(thick + explode * 1.3)]) foot();
+    translate([foot_x1, foot_y0, -(thick + explode * 1.3)]) foot();
+    translate([foot_x1, foot_y1, -(thick + explode * 1.3)]) foot();
+}
+
 //---------------------------------------------------------------
+// The case assembled in 3D layout.
 //---------------------------------------------------------------
 module case_assembled() {
     translate([0, 0, -explode]) bottom_panel();
@@ -281,10 +322,12 @@ module case_assembled() {
     translate([case_x + side_edge + thick * 2 + explode, 0, thick]) rotate(a=90, v=[0, -1, 0]) color("red") side_panel(sd_slot=true);
     translate([side_edge + thick, front_edge + thick, thick]) rotate(a = 90, v = [1, 0, 0])    color("red") front_panel();
     translate([side_edge + thick, front_edge + thick * 2 + case_y, thick]) rotate(a = 90, v = [1, 0, 0]) color("red") back_panel();
-    //translate([0, 0, case_z + thick + explode]) top_panel();
+    translate([0, 0, case_z + thick + explode]) top_panel();
+    feet_assembled();
 }
 
 //------------------------------------------------------------------------
+// All the pieces layed-out in 2D, for laser cutting.
 //------------------------------------------------------------------------
 module case_layed_out() {
     translate([0, 0]) bottom_panel_2d();
@@ -293,9 +336,14 @@ module case_layed_out() {
     translate([0, case_y + case_z + 40]) back_panel_2d();
     translate([case_x + 30, 0]) side_panel_2d();
     translate([case_x + 30, -case_y - 30]) side_panel_2d();
+    translate([case_x + 40, case_y + 40]) foot_2d();
+    translate([case_x + 70, case_y + 40]) foot_2d();
+    translate([case_x + 40, case_y + 80]) foot_2d();
+    translate([case_x + 70, case_y + 80]) foot_2d();
 }
 
 //------------------------------------------------------------------------
+// The rendering!
 //------------------------------------------------------------------------
 case_assembled();
 translate([side_edge + thick, front_edge + thick, thick]) inside_components();
