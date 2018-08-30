@@ -335,7 +335,7 @@ module case_layed_out() {
     translate([0, case_y + 30]) front_panel_2d();
     translate([0, case_y + case_z + 40]) back_panel_2d();
     translate([case_x + 30, 0]) side_panel_2d();
-    translate([case_x + 30, -case_y - 30]) side_panel_2d();
+    translate([case_x + 30, -case_y - 30]) side_panel_2d(sd_slot=true);
     translate([case_x + 40, case_y + 40]) foot_2d();
     translate([case_x + 70, case_y + 40]) foot_2d();
     translate([case_x + 40, case_y + 80]) foot_2d();
