@@ -3,7 +3,7 @@
 echo "# Parts Gallery"
 echo
 for file in *.png; do
-    if [ "$file" = "gallery.png" ]; then
+    if [ "$file" = "gallery.png" -o "$file" = "rpi-micro-media-hub.png" ]; then
         continue
     fi
     module="$(echo ${file} | sed 's/\.png//')"

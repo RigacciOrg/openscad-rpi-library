@@ -9,6 +9,15 @@ of the overall assemble, to aid in building a suitable case for
 the projects. I used the same OpenSCAD software to design 
 3D-printed or laser-cut cases.
 
+## Raspberry Pi Media Hub
+
+One of the first goal where I used this library, was to design a 
+case for a little **Media Hub**, based on the Raspberry Pi. The 
+case is designed to be made of Medium-density fibreboard (MDF) 
+with laser cutting.
+
+![Raspberry Pi Media Hub](img/rpi-micro-media-hub.png "Raspberry Pi Media Hub")
+
 See the **[img/README.md file](img/README.md)** for a gallery of snapshot images.
 
 ![Sample Gallery](img/gallery.png "Sample Gallery")
