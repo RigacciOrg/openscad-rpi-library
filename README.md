@@ -35,6 +35,10 @@ See the **[img/README.md file](img/README.md)** for a gallery of snapshot images
 * Keyes Two-relays module
 * PCD8544 LCD module, blue PCB, pins below
 * PCD8544 LCD module, red PCB, pins above
+* GPS u-blox NEO-6
+* GYBMEP: BME280 pressure, humidity and temperature sensor
+* GY-521: MPU-6050 Accelerometer and Gyroscope
+* GY-273: QMC5883L 3-Axis Magnetic Sensor
 
 #### Miscellaneous Parts
 
