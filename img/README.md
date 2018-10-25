@@ -1,5 +1,6 @@
 # Parts Gallery
 
+![bme280_gybmep](bme280_gybmep.png "bme280_gybmep")
 ![board_2relays_keyes](board_2relays_keyes.png "board_2relays_keyes")
 ![board_2relays_sainsmart](board_2relays_sainsmart.png "board_2relays_sainsmart")
 ![board_pcd8544_blue](board_pcd8544_blue.png "board_pcd8544_blue")
@@ -12,6 +13,7 @@
 ![coax_power_socket](coax_power_socket.png "coax_power_socket")
 ![dupont_female](dupont_female.png "dupont_female")
 ![lcd_1602a](lcd_1602a.png "lcd_1602a")
+![mpu6050_gy521](mpu6050_gy521.png "mpu6050_gy521")
 ![pin_female](pin_female.png "pin_female")
 ![pin_headers](pin_headers.png "pin_headers")
 ![pin_right_angle_double](pin_right_angle_double.png "pin_right_angle_double")
@@ -20,7 +22,9 @@
 ![pin_right_angle_low_custom](pin_right_angle_low_custom.png "pin_right_angle_low_custom")
 ![push_button](push_button.png "push_button")
 ![push_switch_8mm](push_switch_8mm.png "push_switch_8mm")
+![qmc5883l_gy273](qmc5883l_gy273.png "qmc5883l_gy273")
 ![rocker_switch](rocker_switch.png "rocker_switch")
+![ublox_neo6m_gps](ublox_neo6m_gps.png "ublox_neo6m_gps")
 ![usb2_hub_7p_amazon_basics](usb2_hub_7p_amazon_basics.png "usb2_hub_7p_amazon_basics")
 ![usb_audio_adapter_ugreen](usb_audio_adapter_ugreen.png "usb_audio_adapter_ugreen")
 ![usb_hard_disk_toshiba](usb_hard_disk_toshiba.png "usb_hard_disk_toshiba")
