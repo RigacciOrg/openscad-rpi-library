@@ -35,12 +35,12 @@ module usb2_hub_7p_amazon_basics() {
             polygon(points=[[0,0],[x,0],[x,53.5],[42,83.3],[0,y],[0,82.5],[5,81],[5,6.5],[0,4.5]]);
             translate([x-30, 53.5]) circle(r=30, center=true, $fn=64);
         }
-      translate([37, 41, -5])
-        linear_extrude(height=5.1)
+      translate([36, 41, -5])
+        linear_extrude(height=5 + interf)
             difference() {
-                square([24.5,23],center=true);
-                square([18,17],center=true);
-                square([5.8,23.5],center=true);
+                square([24.3,23.2],center=true);
+                square([18.3,16.6],center=true);
+                square([5.7, 23.2 + interf * 2],center=true);
             }
     }
     for (y_pos = [36, 45.25, 54.50, 63.75, 73])
