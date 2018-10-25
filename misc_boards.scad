@@ -332,3 +332,80 @@ module raspberrypi_3_model_b_holes() {
     translate([3.5, 3.5 + 58])       circle(r=(2.75 / 2), $fn=16);
     translate([(x - 3.5), 3.5 + 58]) circle(r=(2.75 / 2), $fn=16);
 }
+
+//------------------------------------------------------------------------
+// GPS u-blox NEO-6.
+//------------------------------------------------------------------------
+module ublox_neo6m_gps() {
+    x = 24; y = 36; z = 0.80;
+    holes_x = 18;
+    holes_y = 30;
+    hole_off_x = (x - holes_x) / 2;
+    hole_off_y = (y - holes_y) / 2;
+    pin_off_x = (x - 2.54 * 5) / 2;
+    color([239/255, 32/255, 64/255]) linear_extrude(height=z) {
+        difference() {
+           square(size = [x, y]);
+           translate([hole_off_x, hole_off_y]) circle(r=1.5, center=true, $fn=24);
+           translate([hole_off_x + holes_x, hole_off_y]) circle(r=1.5, center=true, $fn=24);
+           translate([hole_off_x, hole_off_y + holes_y]) circle(r=1.5, center=true, $fn=24);
+           translate([hole_off_x + holes_x, hole_off_y + holes_y]) circle(r=1.5, center=true, $fn=24);
+        }
+    }
+    translate([2, 12, z]) color("silver") cube(size=[15, 12, 2.4]);
+    translate([9, 33, z+0.7]) color("gold") cylinder(r=1.3, h=1.4, center=true, $fn=24);
+    //translate([pin_off_x, 3.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_headers(5, 1);
+    translate([pin_off_x, 3.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_right_angle_low(5, 1);
+}
+
+//------------------------------------------------------------------------
+// GYBMEP: BME280 pressure, humidity and temperature sensor.
+//------------------------------------------------------------------------
+module bme280_gybmep() {
+    x = 10.5; y = 14; z = 1.5;
+    pin_off_x = (x - 2.54 * 4) / 2;
+    color([182/255, 60/255, 52/255]) linear_extrude(height=z) {
+        difference() {
+            square(size = [x, y]);
+            translate([2.8, 10.9]) circle(r=1.5, center=true, $fn=24);
+        }
+    }
+    translate([6.0, 9.6, z]) color("silver") cube(size=[2.5, 2.5, 0.93]);
+    //translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_headers(4, 1);
+    translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_right_angle_low(4, 1);
+}
+
+//------------------------------------------------------------------------
+// GY-521: MPU-6050 Accelerometer and Gyroscope.
+//------------------------------------------------------------------------
+module mpu6050_gy521() {
+    x = 21; y = 15.6; z = 1.2;
+    color([30/255, 114/255, 198/255]) linear_extrude(height=z) {
+        difference() {
+            square(size = [x, y]);
+            translate([3, y-3]) circle(r=1.5, center=true, $fn=24);
+            translate([x-3, y-3]) circle(r=1.5, center=true, $fn=24);
+        }
+    }
+    translate([8.3, 5.6, z]) color([60/255, 60/255, 60/255]) cube(size=[4.0, 4.0, 0.9]);
+    //translate([0.34, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_headers(8, 1);
+    translate([0.34, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_right_angle_low(8, 1);
+}
+
+//------------------------------------------------------------------------
+// GY-273: QMC5883L 3-Axis Magnetic Sensor.
+//------------------------------------------------------------------------
+module qmc5883l_gy273() {
+    x = 13.6; y = 18.5; z = 1.15;
+    pin_off_x = (x - 2.54 * 5) / 2;
+    color([30/255, 114/255, 198/255]) linear_extrude(height=z) {
+        difference() {
+            square(size = [x, y]);
+            translate([2.5, y-3]) circle(r=1.5, center=true, $fn=24);
+            translate([x-2.5, y-3]) circle(r=1.5, center=true, $fn=24);
+        }
+    }
+    translate([5.1, 8.3, z]) color([60/255, 60/255, 60/255]) cube(size=[3.0, 3.0, 0.9]);
+    //translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_headers(5, 1);
+    translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_right_angle_low(5, 1);
+}
