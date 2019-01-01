@@ -334,7 +334,7 @@ module raspberrypi_3_model_b_holes() {
 }
 
 //------------------------------------------------------------------------
-// GPS u-blox NEO-6.
+// GPS u-blox NEO-6M.
 //------------------------------------------------------------------------
 module ublox_neo6m_gps() {
     x = 24; y = 36; z = 0.80;
@@ -364,7 +364,7 @@ module ublox_neo6m_gps() {
 module bme280_gybmep() {
     x = 10.5; y = 14; z = 1.5;
     pin_off_x = (x - 2.54 * 4) / 2;
-    color([182/255, 60/255, 52/255]) linear_extrude(height=z) {
+    color([134/255, 49/255, 117/255]) linear_extrude(height=z) {
         difference() {
             square(size = [x, y]);
             translate([2.8, 10.9]) circle(r=1.5, center=true, $fn=24);
