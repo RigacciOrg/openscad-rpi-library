@@ -14,6 +14,22 @@ include <misc_parts.scad>;
 interf = 0.1;
 
 //------------------------------------------------------------------------
+// m25_standard_hole Standard fit M2.5 hole size definition
+//------------------------------------------------------------------------
+module m25_standard_hole() {
+	circle(r=(2.75 / 2), $fn=16);
+}
+
+//------------------------------------------------------------------------
+// Move copies of children to positions in passed array
+//------------------------------------------------------------------------
+module array_holes(pos) {
+	for (pos=pos) {			
+			translate(pos) children();
+	}
+}
+
+//------------------------------------------------------------------------
 // 1602A LCD panel 16x2 characters.
 //------------------------------------------------------------------------
 module lcd_1602a() {
@@ -235,8 +251,16 @@ module board_raspberrypi_model_b_v2() {
 //------------------------------------------------------------------------
 module raspberrypi_model_b_v2_holes() {
     x = 56; y = 85;
-    translate([(x - 18), 25.5]) circle(r=(2.9 / 2), $fn=16);
-    translate([12.5, (y - 5)])  circle(r=(2.9 / 2), $fn=16);
+	holes=[
+		[(x - 18), 25.5],
+		[12.5, (y - 5)] 
+	];
+	
+	if ($children > 0) {
+		array_holes(pos=holes) children();
+	} else {
+		array_holes(pos=holes) m25_standard_hole();		
+	}
 }
 
 //------------------------------------------------------------------------
@@ -279,11 +303,19 @@ module board_raspberrypi_model_a_plus_rev1_1() {
 // Holes for the Raspberry Pi Model A+ rev.1.1.
 //------------------------------------------------------------------------
 module raspberrypi_model_a_plus_rev1_1_holes() {
-    x = 56;
-    translate([3.5, 3.5])            circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5])      circle(r=(2.75 / 2), $fn=16);
-    translate([3.5, 3.5 + 58])       circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5 + 58]) circle(r=(2.75 / 2), $fn=16);
+ 	off=3.5;
+	x=49 + off;
+	y=58 + off;
+	holes=[
+		[off,off], [x, off],
+		[off, y],  [x, y]
+	];
+	
+	if ($children > 0) {
+		array_holes(pos=holes) children();
+	} else {
+		array_holes(pos=holes) m25_standard_hole();		
+	}
 }
 
 
@@ -325,12 +357,12 @@ module board_raspberrypi_3_model_b() {
 //------------------------------------------------------------------------
 // Holes for Raspberry Pi 3 Model B v.1.2.
 //------------------------------------------------------------------------
+
 module raspberrypi_3_model_b_holes() {
-    x = 56;
-    translate([3.5, 3.5])            circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5])      circle(r=(2.75 / 2), $fn=16);
-    translate([3.5, 3.5 + 58])       circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5 + 58]) circle(r=(2.75 / 2), $fn=16);
+	if ($children > 0)
+		raspberrypi_model_a_plus_rev1_1_holes() children();
+	else
+		raspberrypi_model_a_plus_rev1_1_holes();
 }
 
 //------------------------------------------------------------------------
