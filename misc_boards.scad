@@ -199,7 +199,7 @@ module board_raspberrypi_model_b_v2() {
 
     $fn = 32;
     x  = 56;     y = 85;    z =  1.6;	// Official PCB size
-    ex = 15.40; ey = 21.8; ez = 13.0;	// Official Ethernet offset
+    //ex = 15.40; ey = 21.8; ez = 13.0;	// Official Ethernet offset
     ex = 16.00; ey = 21.3; ez = 13.5;	// Measured Ethernet offset
     ux = 13.25; uy = 17.2; uz = 15.3;	// Official USB connector size
     hx = 11.40; hy = 15.1; hz = 6.15;	// Official HDMI connector size
@@ -323,14 +323,16 @@ module board_raspberrypi_3_model_b() {
 }
 
 //------------------------------------------------------------------------
-// Holes for Raspberry Pi 3 Model B v.1.2.
+// Holes for the Raspberry Pi B+, 2B, 3B, 3B+ and 4B Models.
 //------------------------------------------------------------------------
 module raspberrypi_3_model_b_holes() {
-    x = 56;
-    translate([3.5, 3.5])            circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5])      circle(r=(2.75 / 2), $fn=16);
-    translate([3.5, 3.5 + 58])       circle(r=(2.75 / 2), $fn=16);
-    translate([(x - 3.5), 3.5 + 58]) circle(r=(2.75 / 2), $fn=16);
+    x0 = 3.5; y0 = 3.5; x = 49; y = 58;
+    translate([x0, y0]) {
+        translate([0, 0]) circle(r=(2.75 / 2), $fn=16);
+        translate([x, 0]) circle(r=(2.75 / 2), $fn=16);
+        translate([0, y]) circle(r=(2.75 / 2), $fn=16);
+        translate([x, y]) circle(r=(2.75 / 2), $fn=16);
+    }
 }
 
 //------------------------------------------------------------------------
@@ -408,4 +410,137 @@ module qmc5883l_gy273() {
     translate([5.1, 8.3, z]) color([60/255, 60/255, 60/255]) cube(size=[3.0, 3.0, 0.9]);
     //translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_headers(5, 1);
     translate([pin_off_x, 2.54, 0]) rotate(a=180, v=[1, 0, 0]) pin_right_angle_low(5, 1);
+}
+
+//------------------------------------------------------------------------
+// X835 V1.1 SATA board for the Raspberry Pi, by Suptronics.com.
+//------------------------------------------------------------------------
+module suptronics_x835() {
+
+    pcb_x = 101.6; pcb_y = 162.8; pcb_z = 1.75;         // X835 board PCB size.
+    legs_above_height = 11.7; legs_below_height = 32;   // Legs sizes.
+    legs_offset_x = 6.0; legs_offset_y = 3.5;           // Legs distance from edges.
+    usb_x1 = 14.5; usb_y1 = 13.2; usb_z1 = 5.75;        // USB socket body.
+    usb_x2 =  0.5; usb_y2 = 14.4; usb_z2 = 7.00;        // USB socket external flange.
+    usb_x3 = 10.0; usb_y3 = 12.0; usb_z3 = 4.50;        // USB socket hole.
+    usb_x4 = 10.0; usb_y4 = 11.0; usb_z4 = 1.60;        // USB socket Key.
+    usb_pos = [27.0, 48.0, 80.976, 101.976];            // USB sockets positions.
+    rpi_mod_b_x = 56; rpi_mod_b_y = 85;                 // Raspberry Pi Model B PCB size.
+    rpi_mod_b_holes_offset = 3.5;                       // Distance from the edges.
+    hd_stands_pos = [37.60, 69.35, 113.80];             // Hard disk stands positions.
+    hd_a5 = 3.18;                                       // HD bottom screw holes from edge.
+    pow_x = 14.0; pow_y = 9.0; pow_z = 11.0;            // Power socket size.
+    pow_hole_diam = 6.2; pow_hole_x = 9.5;              // Power socket hole.
+    pow_pin_diam = 2.55;                                // Power socket pin.
+    legs_above_pos = [
+        [ 0,  0],
+        [49,  0],
+        [ 0, 58],
+        [49, 58]
+    ];
+    legs_below_pos = [
+        [legs_offset_x, legs_offset_y],
+        [pcb_x - legs_offset_x, legs_offset_y],
+        [pcb_x - legs_offset_x, pcb_y - legs_offset_y],
+        [legs_offset_x, pcb_y - legs_offset_y]
+    ];
+
+    // Submodule for standing legs.
+    module x835_leg(height) {
+        hole_depth = 5;
+        hole_diam = 2.6;
+        difference() {
+            cylinder(r=5.20/2, h=height, $fn=6);
+            translate([0, 0, -interf]) cylinder(r=hole_diam/2, h=hole_depth, $fn=32);
+            translate([0, 0, height-hole_depth+interf]) cylinder(r=hole_diam/2, h=hole_depth, $fn=32);
+        }
+    }
+
+    // Submodule for hard disk standings.
+    module x835_hd_stand() {
+        hd_stand_height = 2.70;
+        hd_stand_diam = 5.50;
+        hd_stand_hole_diam = 2.50;
+        translate([0, 0, -(hd_stand_height / 2)])
+            color("silver") difference() {
+                cylinder(center=true, r=hd_stand_diam/2, h=hd_stand_height, $fn=48);
+                cylinder(center=true, r=hd_stand_hole_diam/2, h=hd_stand_height+interf*2, $fn=32);
+            }
+    }
+
+    // Submodule for USB ports.
+    module x835_usb_port() {
+        color("silver")
+            difference() {
+                union() {
+                    cube(center=true, size=[usb_x1, usb_y1, usb_z1]);
+                    translate([(usb_x1 - usb_x2) / 2, 0, 0])
+                        cube(center=true, size=[usb_x2, usb_y2, usb_z2]);
+                }
+                translate([(usb_x1 - usb_x3) / 2 + interf, 0, 0])
+                    cube(center=true, size=[usb_x3, usb_y3, usb_z3]);
+            }
+        color([0/255, 0/255, 198/255]) translate([(usb_x1 - usb_x3) / 2, 0, usb_z4 / 2])
+            cube(center=true, size=[usb_x4, usb_y4, usb_z4]);
+    }
+
+    // Submodule for 12 V power socket.
+    module x835_power_socket() {
+        color([35/255, 35/255, 35/255])
+            difference() {
+                cube(center=true, size=[pow_x, pow_y, pow_z]);
+                translate([(pow_x-pow_hole_x)/2+interf, 0, (pow_y - pow_hole_diam) / 2])
+                    rotate(a=90, v=[0, 1, 0])
+                    cylinder(center=true, r=pow_hole_diam/2, h=pow_hole_x, $fn=32);
+            }
+        color("silver")
+            translate([(pow_x - pow_hole_x) / 2, 0, (pow_y - pow_hole_diam) / 2])
+                rotate(a=90, v=[0, 1, 0])
+                    cylinder(center=true, r=pow_pin_diam/2, h=pow_hole_x, $fn=32);
+    }
+
+    translate([0, 0, legs_below_height]) {
+        // The PCB.
+        color ([43/255, 53/255, 77/255]) linear_extrude(height=pcb_z) {
+            difference() {
+                square(size=[pcb_x, pcb_y]);
+                // Bottom legs holes.
+                for(center = legs_below_pos) {
+                    translate(center) circle(r=1.25, $fn=24);
+                }
+                // RPi holes.
+                translate([pcb_x - rpi_mod_b_y, rpi_mod_b_x])
+                    rotate(a=270, v=[0, 0, 1])
+                        raspberrypi_3_model_b_holes();
+                // HD holes.
+                for(pos = hd_stands_pos) {
+                    translate([pcb_x - hd_a5, pos]) circle(r=1.25, $fn=24);
+                    translate([hd_a5, pos]) circle(r=1.25, $fn=24);
+                }
+            }
+        }
+        // HD stands.
+        for(pos = hd_stands_pos) {
+            translate([pcb_x - hd_a5, pos, 0]) x835_hd_stand();
+            translate([hd_a5, pos, 0]) x835_hd_stand();
+        }
+        // USB ports.
+        translate([pcb_x - (usb_x1 / 2), 0, pcb_z + (usb_z2 / 2)]) {
+            for(pos = usb_pos) {
+                translate([0, pos, 0])
+                        x835_usb_port();
+            }
+        }
+        // Power socket.
+        translate([pcb_x - (pow_x / 2), pcb_y - 25.8, pcb_z + pow_z / 2])
+            x835_power_socket();
+    }
+    // Bottom legs.
+    for(center = legs_below_pos)
+        translate(center) x835_leg(legs_below_height);
+    // Top legs.
+    translate([pcb_x - rpi_mod_b_y + rpi_mod_b_holes_offset, rpi_mod_b_x - rpi_mod_b_holes_offset, legs_below_height + pcb_z])
+        rotate(a=270, v=[0, 0, 1])
+            for(center = legs_above_pos)
+                translate(center) x835_leg(legs_above_height);
 }

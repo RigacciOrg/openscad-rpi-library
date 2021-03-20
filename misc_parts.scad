@@ -86,6 +86,29 @@ module coax_power_socket() {
 }
 
 //------------------------------------------------------------------------
+// Coaxial power plug socket, with 2.1 mm pin. Metal body.
+//------------------------------------------------------------------------
+module coax_metal_power_socket() {
+    r1 = 6.20; h1 =  2.20;        // Collar
+    r2 = 4.80; h2 = 14.50;        // Main body
+    r3 = 2.77; h3 =  7.28;        // Hole
+    r4 = 7.80; h4 =  2.30;        // Bolt
+    r5 = 1.05; h5 = h3-2.4;       // Center pin
+    x1 = 3.0; y1 = 0.4; z1 = 10;  // Negative pin
+    color("silver") difference() {
+        union() {
+            cylinder(r=r1, h=h1, $fn=18);
+            translate([0, 0, -h2]) cylinder(r=r2, h=h2, $fn=36);
+        }
+        translate([0, 0, -h3 + h1 ]) cylinder(r=r3, h=(h3 + 0.1), $fn=24);
+    }
+    translate([0, 0, -5.1]) color("silver") cylinder(r=r5, h=h5, $fn=18);
+    translate([0, 0, -(h4 + 2)]) color("gray") cylinder(r=r4, h=h4, $fn=6);
+    translate([0, 0, -(h2 + 5.90)])  color("silver") cylinder(r=1.25, h=5.90, $fn=24);
+    translate([-(x1 / 2), r2-y1*2, -(h2 + z1)]) color("silver") cube([x1, y1, z1]);
+}
+
+//------------------------------------------------------------------------
 // Metal momentary push switch 8 mm.
 //------------------------------------------------------------------------
 module push_switch_8mm() {
@@ -299,6 +322,26 @@ module usb_male_type_b_connector() {
         translate([0, y2 + h + 5, 0]) rotate(a=90, v=[1, 0, 0]) cylinder(r=4/2, h=10, center=true);
     }
 }
+
+//------------------------------------------------------------------------
+// Micro HDMI right-angle connector.
+//------------------------------------------------------------------------
+module hdmi_micro_right_angle_connector() {
+    x1 =  5.85; y1 =  6.00; z1 = 2.30;  // Metal part
+    x2 = 11.20; y2 = 17.80; z2 = 8.00;  // Plastic part1
+    x3 = 19.54; y3 = 11.20; z3 = 7.50;  // Plastic part2
+    x4 = 28.80; y4 =  7.50; z4 = 6.50;  // Plastic part3
+    cable_len = 50;
+    $fn = 32;
+    translate([0, -y1/2, 0]) color("gold") cube([x1, y1, z1], center = true);
+    color([32/255, 32/255, 32/255]) {
+        translate([0, y2/2, 0]) cube([x2, y2, z2], center = true);
+        translate([(x2-x3)/2, y2-y3/2, 0]) cube([x3, y3, z3], center = true);
+        translate([(x2-x4)/2, y4/2 + (y2-y3), 0]) cube([x4, y4, z4], center = true);
+        translate([-cable_len/2, y4/2 + (y2-y3), 0]) rotate(a=90, v=[0, 1, 0]) cylinder(r=4/2, h=cable_len, center=true);
+    }
+}
+
 
 //------------------------------------------------------------------------
 // Nano WiFi USB dongle by Edimax (EW-7811UN).

@@ -81,3 +81,62 @@ module usb_hard_disk_toshiba() {
         translate([40 + 8, y + 40.5, 7.5]) rotate(a = 90, v = [-1, 0, 0]) cylinder(r = 3.5/2, h = 15, center = true, $fn = 32);
     }
 }
+
+//------------------------------------------------------------------------
+// Hard disk 3.5 inches form factor.
+//------------------------------------------------------------------------
+module hard_disk_35_inches() {
+    hd_a1  =  26.10;
+    hd_a2  = 147.00;
+    hd_a3  = 101.60;
+    hd_a4  =  95.25;
+    hd_a5  =   3.18;
+    hd_a6  =  44.45;
+    hd_a7  =  41.28;
+    hd_a8  =  28.50;
+    hd_a8b =  41.61;
+    hd_a9  = 101.60;
+    hd_a10 =   6.35;
+    hd_a13 =  76.20;
+    hole_depth = 3.80;
+    module screw_hole() {
+        cylinder(center=true, r=1.5, h=hole_depth, $fn=32);
+    }
+    color("grey")
+        difference() {
+            cube(size=[hd_a3, hd_a2, hd_a1]);
+            translate([(hd_a3-97.0)/2, hd_a2-7.20+interf, -interf]) cube(size=[97.0, 7.20, 9.0]);
+            // Bottom holes.
+            hole_z = hole_depth / 2 - interf;
+            translate([hd_a5 + hd_a4, hd_a2 - hd_a7 - hd_a13, hole_z]) screw_hole();
+            translate([hd_a5 + hd_a4, hd_a2 - hd_a7 - hd_a6,  hole_z]) screw_hole();
+            translate([hd_a5 + hd_a4, hd_a2 - hd_a7,          hole_z]) screw_hole();
+            translate([hd_a5,         hd_a2 - hd_a7 - hd_a13, hole_z]) screw_hole();
+            translate([hd_a5,         hd_a2 - hd_a7 - hd_a6,  hole_z]) screw_hole();
+            translate([hd_a5,         hd_a2 - hd_a7,          hole_z]) screw_hole();
+            // Side holes.
+            translate([hole_z, hd_a2 - hd_a8 - hd_a9,          hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+            translate([hole_z, hd_a2 - hd_a8 - hd_a8b,         hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+            translate([hole_z, hd_a2 - hd_a8,                  hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+            translate([hd_a3 - hole_z, hd_a2 - hd_a8 - hd_a9,  hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+            translate([hd_a3 - hole_z, hd_a2 - hd_a8 - hd_a8b, hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+            translate([hd_a3 - hole_z, hd_a2 - hd_a8,          hd_a10]) rotate(a=90, v=[0, 1, 0]) screw_hole();
+        }
+    // SATA connector.
+    color([20/255, 20/255, 10/255])
+        translate([50, hd_a2-7.5, interf]) {
+            difference() {
+                cube(size=[43.0, 7.5, 6.24]);
+                translate([(43.0-37.2)/2, 7.5 - 5.4 + interf, -interf])
+                    cube(size=[37.20, 5.4,  6.25 - 1.50]);
+            }
+            translate([17.7, 0, 2.1]) {
+                cube(size=[20.6, 7.5, 1.25]);
+                translate([0, 0, -(2.4-1.25)]) cube(size=[1.15, 7.5, 2.4]);
+            }
+            translate([4.8, 0, 2.1]) {
+                cube(size=[10.4, 7.5, 1.25]);
+                translate([10.4-1.15, 0, -(2.4-1.25)]) cube(size=[1.15, 7.5, 2.4]);
+            }
+        }
+}

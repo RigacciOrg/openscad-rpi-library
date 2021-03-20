@@ -39,6 +39,7 @@ See the **[img/README.md file](img/README.md)** for a gallery of snapshot images
 * GYBMEP: BME280 pressure, humidity and temperature sensor
 * GY-521: MPU-6050 Accelerometer and Gyroscope
 * GY-273: QMC5883L 3-Axis Magnetic Sensor
+* X835 SupTronics 3.5 SATA HDD shield for the Raspberry Pi
 
 #### Miscellaneous Parts
 
@@ -57,6 +58,7 @@ See the **[img/README.md file](img/README.md)** for a gallery of snapshot images
 #### Gadgets
 
 * USB external hard disk 2.5" (Toshiba)
+* SATA 3.5 inches hard disk
 * UBS 2.0 hub 7 ports, Amazon Basics
 * UBS 3.0 hub 4 ports, Amazon Basics (**WARNING**: does not work with the Raspberry Pi, VIA Labs chip, USB ID 2109:2811)
 * UGREEN USB Audio Adapter
