@@ -336,6 +336,52 @@ module raspberrypi_3_model_b_holes() {
 }
 
 //------------------------------------------------------------------------
+// Raspberry Pi 4 Model B - (Credits to Richard Jelbert)
+//------------------------------------------------------------------------
+module board_raspberrypi_4_model_b() {
+    fn = 64;
+    x  = 56;    y = 85;    z = 1.40;   // Measured PCB size
+    ex = 15.9; ey = 21.5; ez = 13.5;   // Ethernet port size
+    ux = 13.1; uy = 17.1; uz = 15.5;   // Measured USB connector size
+    hx = 7.80; hy = 6.5; hz = 3;       // Measured micro HDMI connector size
+    mx =  7.60; my =  9; mz = 3.20;    // Measured USB-C power connector size
+    module rpi4_cpu() { color("silver") cube([15, 15, 2.4]); }
+    module rpi4_ram() { color("black") cube([15, 10.2, 1]); }
+    module rpi4_wifi() { color("silver") cube([12, 10, 1.5]); }
+    module rpi4_cameracon() { color("black") cube([22, 2.5, 5.5]); }
+    module rpi4_usbc_connector(x, y, z) { color("silver") cube([x, y, z]); }
+    // The origin is the lower face of PCB.
+    translate([0, 0, z]) {
+        translate([56-32.5-7.5,3.5+25.75-7.5,0]) rpi4_cpu();
+        translate([56-32.5-7.5,3.5+43.75-7.5,0]) rpi4_ram();
+        translate([7,6.5,0]) rpi4_wifi();
+        translate([(56/2)-12,(4-1.25),0]) rpi4_cameracon();
+        translate([(56)-22.3,(45),0]) rpi4_cameracon();
+        translate([1.0, 7.1, 0]) pin_headers(2, 20);
+        translate([x-(ex/2)-45.75, y - ey + 2.1, 0]) ethernet_connector(ex, ey, ez);
+        translate([x-(ux/2)-27, 85 - uy + 2.1, 0]) usb_connector(ux, uy, uz);
+        translate([x-(ux/2)-9, 85 - uy + 2.1, 0]) usb_connector(ux, uy, uz);
+        translate([x - hx + 1.8, (3.5+7.7+14.8-(hy/2)), 0]) hdmi_connector(hx, hy, hz);
+        translate([x - hx + 1.8, (3.5+7.7+14.8+13.5-(hy/2)), 0]) hdmi_connector(hx, hy, hz);
+        translate([x - 12.8, 50, 0]) audio_video(12.8);
+        translate([x - mx + 1, (3.5+7.7-(my/2)), 0]) rpi4_usbc_connector(mx, my, mz);
+        //translate([20.5, 0.8, -z]) micro_sd_card();
+        translate([0, 0, -z]) {
+            color("green") linear_extrude(height=z)
+                difference() {
+                    hull() {
+                        translate([  3,   3]) circle(r=3, $fn = fn);
+                        translate([x-3,   3]) circle(r=3, $fn = fn);
+                        translate([x-3, y-3]) circle(r=3, $fn = fn);
+                        translate([  3, y-3]) circle(r=3, $fn = fn);
+                    }
+                    raspberrypi_3_model_b_holes();
+                }
+        }
+    }
+}
+
+//------------------------------------------------------------------------
 // GPS u-blox NEO-6M.
 //------------------------------------------------------------------------
 module ublox_neo6m_gps() {
