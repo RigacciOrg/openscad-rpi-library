@@ -6,6 +6,7 @@
 ![board_pcd8544_blue](board_pcd8544_blue.png "board_pcd8544_blue")
 ![board_pcd8544_red](board_pcd8544_red.png "board_pcd8544_red")
 ![board_raspberrypi_3_model_b](board_raspberrypi_3_model_b.png "board_raspberrypi_3_model_b")
+![board_raspberrypi_4_model_b](board_raspberrypi_4_model_b.png "board_raspberrypi_4_model_b")
 ![board_raspberrypi_model_a_plus_rev1_1](board_raspberrypi_model_a_plus_rev1_1.png "board_raspberrypi_model_a_plus_rev1_1")
 ![board_raspberrypi_model_b_v2](board_raspberrypi_model_b_v2.png "board_raspberrypi_model_b_v2")
 ![coax_metal_power_socket](coax_metal_power_socket.png "coax_metal_power_socket")
